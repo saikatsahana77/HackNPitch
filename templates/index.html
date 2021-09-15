@@ -1,66 +1,138 @@
 <!DOCTYPE html>
-<html>
-<head>
-	<title>Account Page - Bookify</title>
-	<link rel="stylesheet" type="text/css" href="../static/css/style.css">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-	<link rel="shortcut icon" href="../static/favicon.ico" type="image/x-icon">
-</head>
-<body>
-	<img id="stamp_icon" src="../static/logo.png" alt="logo">
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../static/css/style.css" />
+    <link rel="shortcut icon" href="../static/favicon.ico" type="image/x-icon">
+    <title>Bookify</title>
+  </head>
+  {% if data=="a"  %}
+  <body onload="signup_success();">
+  {% elif data=="b"  %}
+  <body onload="signup_failure();">
+  {% elif data=="c"  %}
+  <body onload="login_failure();">
+  {% else %}
+  <body>
+  {% endif %}
+    <div class="container py-5">
+      <h1 id="title">Bookify - One Stop for all your educational needs</h1>
+      <button type="button" class="btn btn-primary btn-lg" style="margin-right:15px;"  data-bs-toggle="modal" data-bs-target="#signUpModal">
+        <strong> SignUp </strong>
+      </button>
+      <button type="button" class="btn btn-success btn-lg" data-bs-toggle="modal" data-bs-target="#signInModal">
+        <strong> Login </strong>
+      </button>
+    
 
-<div class="container" id="container">
-<div class="form-container sign-up-container">
+    <!-- Modal -->
+    <div class="modal fade" data-bs-backdrop="static"  id="signUpModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">User Signup</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            
 
-<form action="">
-	<h1>Create Account</h1>
-	<span style="margin-bottom:10px;">or use your email for registration</span>
-	<input type="text" name="name" placeholder="Name">
-	<input type="email" name="email" placeholder="Email">
-	<input type="password" name="password" placeholder="Password">
-	<button>SignUp</button>
-</form>
+                <form id="signup" action="/signup_check" method="post">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Full Name</label>
+                        <input type="text" name="uname" class="form-control" id="name" required>
+                    </div>
+                    <div class="mb-3">
+                      <label for="email" class="form-label">Email address</label>
+                      <input type="email" name="email" class="form-control" id="email" aria-describedby="emailHelp">
+                    </div>
+                    <div class="mb-3">
+                        <label for="phone" class="form-label">Phone Number (Please exclude 0 or +91 at the start)</label>
+                        <input type="number" name="phone"  class="form-control" id="phone" aria-describedby="emailHelp">
+                    </div>
+                    <div class="mb-3">
+                      <label for="password" class="form-label">Password</label>
+                      <input type="password" name="pass" class="form-control" id="password"  aria-describedby="passHelp">
+                      <div id="passHelp" style="color:red; display:none;" class="form-text">Password is not strong enough!</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password1" class="form-label">Confirm Password</label>
+                        <input type="password" class="form-control" id="password1" aria-describedby="passHelp1">
+                        <div id="passHelp1" style="color:red; display:none;" class="form-text">Passwords don't match!</div>
+                    </div>
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Create Account</button>
+        </form>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" data-bs-backdrop="static"  id="signInModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+          <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">User Login</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+          
+
+              <form id="signIn" action="/login_check" method="post">
+                  <div class="mb-3">
+                    <label for="email" class="form-label">Email address</label>
+                    <input type="email" name="email" class="form-control" id="email" aria-describedby="emailHelp">
+                  </div>
+                  <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" name="pass" class="form-control" id="password"  aria-describedby="passHelp">
+                    <div id="passHelp" style="color:red; display:none;" class="form-text">Wrong Username or Password!</div>
+                  </div>
+                  <div class="mb-3">
+                    <div style="color:rgb(38, 58, 235); display:none;" class="form-text"> <a href="">Forget Password! </a></div>
+                  </div>
+          </div>
+          <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Login</button>
+      </form>
+          </div>
+      </div>
+      </div>
+  </div>
 </div>
-<div class="form-container sign-in-container">
-	<form action="#">
-		<h1>Sign In</h1>
-	<span style="margin-bottom:10px;">or use your account</span>
-	<input type="email" name="email" placeholder="Email">
-	<input type="password" name="password" placeholder="Password">
-	<a href="#">Forgot Your Password</a>
 
-	<button>Sign In</button>
-	</form>
-</div>
-<div class="overlay-container">
-	<div class="overlay">
-		<div class="overlay-panel overlay-left">
-			<h1>Welcome Back!</h1>
-			<p>To keep connected with us please login with your personal info</p>
-			<button class="ghost" id="signIn">Sign In</button>
-		</div>
-		<div class="overlay-panel overlay-right">
-			<h1>Hello, Friend!</h1>
-			<p>Enter your details and start journey with us</p>
-			<button class="ghost" id="signUp">Sign Up</button>
-		</div>
-	</div>
-</div>
-</div>
+  <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
+    <div class="carousel-inner">
+      <div class="carousel-item active text-center">
+        <img src="https://source.unsplash.com/852x480/?books,education" class="d-block" alt="...">
+      </div>
+      <div class="carousel-item">
+        <img src="https://source.unsplash.com/852x480/?notes,books" class="d-block" alt="...">
+      </div>
+      <div class="carousel-item">
+        <img src="https://source.unsplash.com/852x480/?study,notes" class="d-block" alt="...">
+      </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
 
-<script type="text/javascript">
-	const signUpButton = document.getElementById('signUp');
-	const signInButton = document.getElementById('signIn');
-	const container = document.getElementById('container');
-
-	signUpButton.addEventListener('click', () => {
-		container.classList.add("right-panel-active");
-	});
-	signInButton.addEventListener('click', () => {
-		container.classList.remove("right-panel-active");
-	});
-</script>
-
-
-</body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="../static/js/home.js"></script>
+  </body>
 </html>
