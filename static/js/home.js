@@ -39,3 +39,18 @@ function signup_failure(){
 function login_failure(){
     swal("Login Failed", "Invalid email or password!", "error");
 }
+
+$(function() {
+$('#otp').bind('click', function() {
+    $.ajax('/send_otp', {
+    type: 'POST', 
+    data: {},
+    success: function (data, status, xhr) {
+    },
+    error: function (jqXhr, textStatus, errorMessage) {
+    }
+});
+    return false;
+});
+});
+
