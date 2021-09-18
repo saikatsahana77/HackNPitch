@@ -7,6 +7,15 @@ function passWeak() {
     document.getElementById("passHelp").style.display = "block";
 }
 
+var otp ="";
+var email = "";
+
+
+function fill_email(){
+    email = document.getElementById("email_otp_check").value;
+}
+
+
 var signup = document.getElementById("signup");
 
 signup.addEventListener("submit", function(e) {
@@ -40,12 +49,17 @@ function login_failure(){
     swal("Login Failed", "Invalid email or password!", "error");
 }
 
+function pass_reset(){
+    swal("Password Reset", "Your Password has been reset!", "success");
+}
+
 $(function() {
 $('#otp').bind('click', function() {
     $.ajax('/send_otp', {
     type: 'POST', 
-    data: {},
+    data: {email: $('#email_otp_check').val()},
     success: function (data, status, xhr) {
+        otp = data
     },
     error: function (jqXhr, textStatus, errorMessage) {
     }
@@ -54,3 +68,16 @@ $('#otp').bind('click', function() {
 });
 });
 
+
+function check_otp(){
+    var confirm_otp = document.getElementById("box_otp").value;
+    if (confirm_otp !== otp){
+        document.getElementById("otpHelp").style.display = "block";
+    }
+    else{
+        document.getElementById("otp_confirm").setAttribute("data-bs-toggle","modal");
+        document.getElementById("otp_confirm").setAttribute("data-bs-target","#newPassModal");
+        document.getElementById("otp_confirm").click();
+        document.getElementById("email_final").value = email;
+    }
+}

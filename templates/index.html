@@ -17,6 +17,8 @@
   <body onload="signup_failure();">
   {% elif data=="c"  %}
   <body onload="login_failure();">
+  {% elif data=="d"  %}
+  <body onload="pass_reset();">
   {% else %}
   <body>
   {% endif %}
@@ -171,19 +173,79 @@
         <form id="signIn" action="/login_check" method="post">
           <div class="mb-3">
             <label for="email" class="form-label">Email address</label>
-            <input type="email" name="email" class="form-control" id="email" aria-describedby="emailHelp">
+            <input type="email" name="email" class="form-control" id="email_otp_check" onchange="fill_email();" aria-describedby="emailHelp">
           </div>
 
 
       </div>
       <div class="modal-footer">
-      <button id="otp" type="button" class="btn btn-primary">Send OTP</button>
+      <button id="otp" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#otpConfModal">Send OTP</button>
       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
     </form>
       </div>
   </div>
   </div>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" data-bs-backdrop="static"  id="otpConfModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+  <div class="modal-content">
+      <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel">Enter OTP</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        
+
+        <form id="signIn" method="post">
+          <div class="mb-3">
+            <label for="box_otp" class="form-label">Enter Your OTP</label>
+            <input type="password" name="otp" class="form-control" id="box_otp" aria-describedby="otpHelp">
+            <div id="otpHelp" style="color:red; display:none;" class="form-text">Incorrect OTP!</div>
+          </div>
+
+
+      </div>
+      <div class="modal-footer">
+      <button id="otp_confirm" type="button" class="btn btn-primary" onclick="check_otp()">Confirm OTP</button>
+      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+    </form>
+      </div>
+  </div>
+  </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" data-bs-backdrop="static"  id="newPassModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+  <div class="modal-content">
+      <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel">New Password</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        
+
+        <form id="signIn" action="/reset_password" method="post">
+          <div class="mb-3">
+            <label for="new_pass" class="form-label">Enter Your New Password</label>
+            <input type="password" name="new_pass" class="form-control" id="new_pass" aria-describedby="passHelp">
+            <input style="display:none" type="email" id="email_final" name="email_final">
+          </div>
+
+
+      </div>
+      <div class="modal-footer">
+      <button id="otp" type="submit" class="btn btn-primary">Reset Password!</button>
+      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+    </form>
+      </div>
+  </div>
+  </div>
+</div>
+
 </div>
 
   <div id="carouselExampleFade" class="carousel slide carousel-fade py-2" data-bs-ride="carousel">
