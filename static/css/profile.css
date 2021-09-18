@@ -1,0 +1,43 @@
+body{
+    height: 100vh;
+    background-image: url(../images/back.jpg);
+    background-attachment: fixed;
+    background-size: 100vw 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+
+#profile {
+    border-radius: 50%;
+}
+#profile i {
+    font-size: 30px;
+    color: #fff;
+}
+
+.nav-item a:hover{
+    color:#fff !important;
+}
+
+.nav-item {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.dropdown-item:hover{
+    background-color: #343434;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+
+input[type=number]{
+    -moz-appearance: textfield;
+}

@@ -37,6 +37,18 @@ signup.addEventListener("submit", function(e) {
     }
 })
 
+
+var login = document.getElementById("signIn");
+
+login.addEventListener("submit", function(e){
+    // e.preventDefault();
+    sessionStorage.setItem("email", document.getElementById("email_store").value);
+    if (document.getElementById("email_store").value === ""){
+        e.preventDefault();
+    }
+})
+
+
 function signup_success(){
     swal("Signup Success", "Please login to proceed further!", "success");
 }

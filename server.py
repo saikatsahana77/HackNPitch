@@ -6,8 +6,23 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 import sqlite3
 from flask import Flask, render_template, redirect, url_for, request
+from werkzeug.utils import secure_filename
+from io import BufferedReader
+
+
+
 app = Flask(__name__)
 
+
+def convert_into_binary(file_path):
+    with open(file_path, 'rb') as file:
+        binary = file.read()
+    return binary
+
+def readImage(img_name):
+    with open(img_name, 'rb') as file:
+        img = file.stream.read()
+        return img
 
 
 def otp_send(email):
@@ -50,11 +65,7 @@ def index():
 
 @app.route('/dashboard')
 def dashboard():
-    global username
-    if (username != ""):
-        return render_template("dashboard.html",username=username)
-    else:
-        return render_template("login_error.html")
+    return render_template("dashboard.html")
 
 
 @app.route('/signup_check', methods=['POST'])
@@ -93,11 +104,10 @@ def login_check():
         em=email, ps=pswd)
     rows = conn.execute(q1)
     rows = rows.fetchall()
-    print(rows)
     conn.close()
     if (len(rows) == 1):
         username = rows[0][0]
-        return redirect(url_for('dashboard',username=username))
+        return redirect(url_for('dashboard'))
     else:
         return redirect(url_for('index', v="c"))
 
@@ -117,7 +127,35 @@ def reset_password():
     conn.commit()
     conn.close()
     return redirect(url_for('index', v="d"))
-    
+
+@app.route('/profile/<email>')
+def profile(email):
+    email=str(email)
+    conn = sqlite3.connect("bookify.db")
+    q1 = "select * from users where email = '{em}'".format(em=email)
+    rows = conn.execute(q1)
+    rows = rows.fetchall()
+    rows[0] = list(rows[0])
+    for i in range(0,len(rows[0])):
+        if (rows[0][i] == None):
+            rows[0][i] = ""
+    print(rows)
+    return render_template("profile.html",rows=rows)
+
+@app.route('/update_details', methods=['POST'])
+def update_details():
+    email = request.form['email']
+    phone = request.form['phone']
+    address = request.form['address']
+    social = request.form['social']
+    upi  = request.form['upi']
+    conn = sqlite3.connect("bookify.db")
+    q1 = "update users set phone ='{ph}', address='{ad}', social ='{so}', upi='{upi}' where email='{em}'".format(em=email, ph=phone, ad=address, so=social, upi=upi)
+    conn.execute(q1)
+    conn.commit()
+    conn.close()
+    return redirect("/profile/{}".format(email))
+
 
 if __name__ == '__main__':
     app.run(debug=True)
