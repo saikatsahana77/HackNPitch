@@ -1,0 +1,22 @@
+#profile {
+    border-radius: 50%;
+}
+#profile i {
+    font-size: 30px;
+    color: #fff;
+}
+
+.nav-item a:hover{
+    color:#fff !important;
+}
+
+.nav-item {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.dropdown-item:hover{
+    background-color: #343434;
+}
