@@ -1,16 +1,19 @@
 <!doctype html>
 <html lang="en">
   <head>
+    <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
-    <link rel="stylesheet" href="../static/css/profile.css">
     <link rel="shortcut icon" href="../static/favicon.ico" type="image/x-icon">
-    <title>Profile</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+    <link rel="stylesheet" href="../static/css/upload.css">
+    <title>Upload</title>
   </head>
   <body>
     
+
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
           <a class="navbar-brand" href="#">Bookify</a>
@@ -20,7 +23,7 @@
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link" aria-current="page" href="/dashboard">Home</a>
+                <a class="nav-link active" aria-current="page" href="/dashboard">Home</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="#">Your Purchases</a>
@@ -45,7 +48,7 @@
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                      <li><a class="dropdown-item" href="#">My Profile</a></li>
+                      <li><a id="profile_btn" class="dropdown-item">My Profile</a></li>
                       <li><a class="dropdown-item" href="/">SignOut</a></li>
                     </ul>
                   </li>
@@ -61,51 +64,83 @@
       </nav>
 
       <div class="container py-4">
-        <form action = "/update_details", method="post">
+        <form id="uploadForm">
             <div class="row">
-                <div class="col-lg-6 mb-3">
+                <div class="col-lg-2 mb-3">
                     <label for="username" class="form-label">Username</label>
                     <input name="username" type="text" class="form-control" id="username" value="{{rows[0][0]}}" readonly>
                   </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-6 mb-3">
+                  <div class="col-lg-4 mb-3">
                     <label for="email" class="form-label">Email Address</label>
                     <input name="email" type="email" class="form-control" id="email" value="{{rows[0][1]}}" aria-describedby="emailHelp" readonly>
                   </div>
             </div>
             <div class="row">
                 <div class="col-lg-6 mb-3">
-                    <label for="phone" class="form-label">Phone Number</label>
-                    <input name="phone" type="number" required class="form-control" id="phone" value="{{rows[0][2]}}" aria-describedby="emailHelp">
-                  </div>
+                    <label for="name_book" class="form-label">Enter Name of the Book or Material</label>
+                    <input name="name_book" required type="text" class="form-control" id="name_book">
+                </div>
             </div>
             <div class="row">
                 <div class="col-lg-6 mb-3">
-                    <label for="address" class="form-label">Address</label>
-                    <input name="address" required value="{{rows[0][5]}}" type="text" class="form-control" id="address">
-                  </div>
+                    <label for="pic_book" class="form-label">Upload a picture</label>
+                    <input name="pic_book" required type="file" class="form-control" id="pic_book">
+                    <div style="color:#fff;" id="socialHelp" class="form-text">* upload the front cover incase of a book and for notes uplaod a page with details about the notes.</div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-2 mb-3">
+                    <label for="pages_book" class="form-label">Enter No.of Pages</label>
+                    <input name="pages_book" required type="number" class="form-control" id="pages_book">
+                </div>
+                <div class="col-lg-4 mb-3">
+                    <label for="condition_book" class="form-label">How old is the book?</label>
+                    <select id="condition_book" required name="condition_book" class="form-select" aria-label="Book Condition">
+                        <option selected></option>
+                        <option value="1">Less than 1 year</option>
+                        <option value="2">Less than 2 years</option>
+                        <option value="3">Less than 5 years</option>
+                        <option value="4">More than 5 years</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-3 mb-3">
+                    <label for="sub_book" class="form-label">Enter Subject</label>
+                    <input name="sub_book" onchange="add_sub();" required type="text" class="form-control" id="sub_book">
+                </div>
+                <div class="col-lg-3 mb-3">
+                    <label for="stream_book" class="form-label">Enter Stream</label>
+                    <input name="stream_book" onchange="add_stream();" required type="text" class="form-control" id="stream_book">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-3 mb-3">
+                    <label for="weight_book" class="form-label">Weight in kgs</label>
+                    <input name="weight_book" required type="number" class="form-control" id="weight_book">
+                </div>
+                <div class="col-lg-3 mb-3">
+                    <label for="price_book" class="form-label">Expected Price</label>
+                    <input name="price_book" required type="number" class="form-control" id="price_book">
+                </div>
             </div>
             <div class="row">
                 <div class="col-lg-6 mb-3">
-                    <label for="social" class="form-label">Social Media Handle</label>
-                    <input name="social" value="{{rows[0][4]}}" type="text" class="form-control" id="social">
-                    <div id="socialHelp" class="form-text">* Please enter any one of the social media profiles (Facebook, Instagram, LinkedIn, Twitter).</div>
-                  </div>
+                    <label for="desc_book" class="form-label">Material Description</label>
+                    <textarea class="form-control" name="desc_book" id="desc_book" cols="87" rows="2"></textarea>
+                </div>
             </div>
             <div class="row">
                 <div class="col-lg-6 mb-3">
-                    <label for="upi" class="form-label">Add your UPI ID</label>
-                    <input value="{{rows[0][6]}}" name="upi" required type="text" class="form-control" id="upi">
-                  </div>
+                    <label for="tags_book" class="form-label">Tags</label>
+                    <input name="tags_book" required type="text" class="form-control" id="tags_book">
+                </div>
             </div>
-            <button type="submit" class="btn btn-success mt-3"><i class="fas fa-check"></i> Save Changes</button>
+            <button type="submit" class="btn btn-success btn-lg"><i class="fas fa-upload"></i>&nbsp;Upload Material</button>
           </form>
-
       </div>
 
-      
-        <!-- Modal -->
+       <!-- Modal -->
   <div class="modal fade" data-bs-backdrop="static"  id="aboutModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
@@ -126,13 +161,8 @@
     </div>
 </div>
 </div>
-
-<div class="container">
-  
-</div>
-
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="../static/js/profile.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="../static/js/upload.js"></script>
   </body>
 </html>

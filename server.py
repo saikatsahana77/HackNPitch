@@ -142,6 +142,20 @@ def profile(email):
     print(rows)
     return render_template("profile.html",rows=rows)
 
+@app.route('/upload/<email>')
+def upload(email):
+    email=str(email)
+    conn = sqlite3.connect("bookify.db")
+    q1 = "select username, email from users where email = '{em}'".format(em=email)
+    rows = conn.execute(q1)
+    rows = rows.fetchall()
+    rows[0] = list(rows[0])
+    for i in range(0,len(rows[0])):
+        if (rows[0][i] == None):
+            rows[0][i] = ""
+    print(rows)
+    return render_template("upload.html",rows=rows)
+
 @app.route('/update_details', methods=['POST'])
 def update_details():
     email = request.form['email']

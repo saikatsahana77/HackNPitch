@@ -46,3 +46,8 @@ body{
 #search_btn{
     width: 50px;
 }
+
+#sell_btn {
+    color: #fff;
+    text-decoration: none;
+}

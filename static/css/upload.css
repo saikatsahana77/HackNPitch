@@ -1,0 +1,73 @@
+body{
+    height: 100vh;
+    background-image: url(../images/back_upload.png);
+    background-attachment: fixed;
+    background-size: 100vw 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#profile {
+    border-radius: 50%;
+}
+#profile i {
+    font-size: 30px;
+    color: #fff;
+}
+
+.nav-item a:hover{
+    color:#fff !important;
+}
+
+.nav-item {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.dropdown-item:hover{
+    background-color: #343434;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+
+input[type=number]{
+    -moz-appearance: textfield;
+}
+
+#uploadForm div div label {
+    color: #fff;
+    font-size: 18px;
+}
+
+
+/* Tags Input */
+/* .bootstrap-tagsinput {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    display: block;
+    padding: 4px 6px;
+    color: #555;
+    vertical-align: middle;
+    border-radius: 4px;
+    max-width: 100%;
+    line-height: 22px;
+    cursor: text;
+}
+.bootstrap-tagsinput input {
+    border: none;
+    box-shadow: none;
+    outline: none;
+    background-color: transparent;
+    padding: 0 6px;
+    margin: 0;
+    width: auto;
+    max-width: inherit;
+} */
