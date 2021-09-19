@@ -36,7 +36,7 @@
             <a class="nav-link active" aria-current="page" href="#">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">About Us</a>
+            <a class="nav-link" href="/about">About Us</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#aboutModal">Contact Us</a>
@@ -123,7 +123,7 @@
                     <div id="passHelp" style="color:red; display:none;" class="form-text">Wrong Username or Password!</div>
                   </div>
                   <div class="mb-3">
-                    <div style="color:rgb(38, 58, 235); font-size:24; font-weight: bold;" class="form-text"> <span data-bs-toggle="modal" data-bs-target="#otpModal">Forget Password! </span></div>
+                    <div style="color:rgb(38, 58, 235); font-size:24; font-weight: bold;" class="form-text"> <span id="forget_pass" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#otpModal">Forget Password! </span></div>
                   </div>
           </div>
           <div class="modal-footer">
@@ -179,7 +179,7 @@
 
       </div>
       <div class="modal-footer">
-      <button id="otp" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#otpConfModal">Send OTP</button>
+      <button id="otp" type="button" class="btn btn-primary"  data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#otpConfModal">Send OTP</button>
       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
     </form>
       </div>

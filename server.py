@@ -195,7 +195,7 @@ def add_book():
 
     db.session.add(upload)
     db.session.commit()
-    return redirect("/upload/{}".format(seller))
+    return redirect("/products/{}".format(seller))
     
 
 @app.route('/update_details', methods=['POST'])
@@ -217,7 +217,7 @@ def update_details():
 def method_name(email):
     email=str(email)
     conn = sqlite3.connect("bookify.db")
-    q1 = "select b_name, buyer, bought, pages, age, subject, stream, weight, price, desc, tags from transactions where seller = '{em}'".format(em=email)
+    q1 = "select b_name, buyer, bought, pages, age, subject, stream, weight, price, desc, tags from transactions where seller = '{em}' order by id desc".format(em=email)
     rows = conn.execute(q1)
     rows = rows.fetchall()
     for i in range(len(rows)):
@@ -232,6 +232,10 @@ def method_name(email):
         elif (rows[i][2] == 1):
             rows[i][2] = "sold"
     return render_template("my_products.html", rows=rows)
+
+@app.route('/about')
+def about():
+    return render_template("about.html")
 
 
 if __name__ == '__main__':
