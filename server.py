@@ -213,5 +213,26 @@ def update_details():
     return redirect("/profile/{}".format(email))
 
 
+@app.route('/products/<email>')
+def method_name(email):
+    email=str(email)
+    conn = sqlite3.connect("bookify.db")
+    q1 = "select b_name, buyer, bought, pages, age, subject, stream, weight, price, desc, tags from transactions where seller = '{em}'".format(em=email)
+    rows = conn.execute(q1)
+    rows = rows.fetchall()
+    for i in range(len(rows)):
+        rows[i] = list(rows[i])
+    for i in range(len(rows)):
+        if (rows[i][1] == None):
+            rows[i][1] = "N/A"
+        else:
+            pass
+        if (rows[i][2] == 0):
+            rows[i][2] = "unsold"
+        elif (rows[i][2] == 1):
+            rows[i][2] = "sold"
+    return render_template("my_products.html", rows=rows)
+
+
 if __name__ == '__main__':
     app.run(debug=True)
