@@ -64,7 +64,7 @@
       </nav>
 
       <div class="container py-4">
-        <form id="uploadForm">
+        <form id="uploadForm" action="/add_book" method="post" enctype="multipart/form-data">
             <div class="row">
                 <div class="col-lg-2 mb-3">
                     <label for="username" class="form-label">Username</label>
@@ -84,7 +84,7 @@
             <div class="row">
                 <div class="col-lg-6 mb-3">
                     <label for="pic_book" class="form-label">Upload a picture</label>
-                    <input name="pic_book" required type="file" class="form-control" id="pic_book">
+                    <input name="pic_book" required type="file" class="form-control" id="pic_book" accept="image/*">
                     <div style="color:#fff;" id="socialHelp" class="form-text">* upload the front cover incase of a book and for notes uplaod a page with details about the notes.</div>
                 </div>
             </div>

@@ -8,10 +8,29 @@ import sqlite3
 from flask import Flask, render_template, redirect, url_for, request
 from werkzeug.utils import secure_filename
 from io import BufferedReader
+from flask_sqlalchemy import SQLAlchemy
 
 
 
 app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = r"sqlite:///C:\Users\Asus\Desktop\HackNPitch\bookify.db"
+db = SQLAlchemy(app)
+
+class Transactions(db.Model):
+    b_name = db.Column(db.String)
+    seller = db.Column(db.String)
+    buyer = db.Column(db.String, nullable=True)
+    bought = db.Column(db.Integer)
+    pages = db.Column(db.Integer)
+    age = db.Column(db.String)
+    subject = db.Column(db.String)
+    stream = db.Column(db.String)
+    weight = db.Column(db.Float)
+    price = db.Column(db.Float)
+    desc = db.Column(db.String, nullable=True)
+    tags = db.Column(db.String)
+    c_image  = db.Column(db.LargeBinary)
+    id  = db.Column(db.Integer, primary_key=True)
 
 
 def convert_into_binary(file_path):
@@ -155,6 +174,29 @@ def upload(email):
             rows[0][i] = ""
     print(rows)
     return render_template("upload.html",rows=rows)
+
+@app.route('/add_book', methods=['POST'])
+def add_book():
+    bname = request.form['name_book']
+    seller= request.form['email']
+    buyer = None
+    bought = 0
+    pages = request.form['pages_book']
+    age = request.form['condition_book']
+    subject = request.form['sub_book']
+    stream = request.form['stream_book']
+    weight = float(request.form['weight_book'])
+    price = float(request.form['price_book'])
+    desc = request.form['desc_book']
+    tags = request.form['tags_book']
+    c_image = request.files['pic_book']
+
+    upload = Transactions(b_name= bname, seller = seller, buyer = buyer, bought=bought, pages = pages, age = age, subject = subject, stream = stream, weight = weight, price = price, desc = desc, tags= tags, c_image = c_image.read())
+
+    db.session.add(upload)
+    db.session.commit()
+    return redirect("/upload/{}".format(seller))
+    
 
 @app.route('/update_details', methods=['POST'])
 def update_details():
