@@ -9,6 +9,7 @@
     <link rel="shortcut icon" href="../static/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
     <link rel="stylesheet" href="../static/css/dashboard.css">
+    <link rel="stylesheet" href="../static/css/link.css">
     <title>Dashboard</title>
   </head>
   <body>
@@ -72,11 +73,11 @@
               <div class="col-md-10">
                 <div class="input-group">
                   <div class="form-outline" id="search_cont">
-                    <input name="search" type="search" id="search" class="form-control" />
+                    <input name="search" type="search" id="search_box" class="form-control" onkeyup="filter()" />
                   </div>
-                  <button id="search_btn" type="button" class="btn btn-primary">
+                  <!-- <button id="search_btn" type="button" class="btn btn-primary">
                     <i class="fas fa-search"></i>
-                  </button>
+                  </button> -->
                 </div>
               </div>
             </div>
@@ -84,7 +85,7 @@
 
 
             {% for row in rows %}
-      <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative" style='background-color: rgb(221, 221, 221);'>
+      <div class="items row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative" style='background-color: rgb(221, 221, 221);'>
         <div class="col p-4 d-flex flex-column position-static">
           <strong class="d-inline-block mb-2 text-primary">{{row[5]}}</strong>
           <h3 class="mb-0">{{row[0]}}</h3>
@@ -94,7 +95,9 @@
           <span style="font-size: 18px;" class="stretched-link">Seller: {{row[2]}}</span>
           <span style="font-size: 18px;" class="stretched-link">Condition: {{row[4]}}</span>
           <span style="font-size: 18px;" class="stretched-link">Pages: {{row[3]}}</span>
-          <span style="font-size: 18px;" class="stretched-link">Tags: {{row[10]}}</span>
+          <span class="tags" style="font-size: 18px;" class="stretched-link">Tags: {{row[10]}}</span>
+          <br>
+          <button type="button" class="btn btn-success btn-lg"> <a href=""> <i class="fas fa-shopping-cart"></i> Add To Cart! </a></button>
         </div>
         <div class="col-auto d-none d-lg-block">
           <img style="width:400px;height:400px;object-fit:cover;" src=".{{row[11]}}" alt="">
