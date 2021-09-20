@@ -81,6 +81,30 @@
               </div>
             </div>
             <hr>
+
+
+            {% for row in rows %}
+      <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative" style='background-color: rgb(221, 221, 221);'>
+        <div class="col p-4 d-flex flex-column position-static">
+          <strong class="d-inline-block mb-2 text-primary">{{row[5]}}</strong>
+          <h3 class="mb-0">{{row[0]}}</h3>
+          <div class="mb-1 text-muted">{{row[6]}}</div>
+          <p class="card-text mb-auto">{{row[9]}}</p>
+          <span style="font-size: 20px;" class="stretched-link"> <strong> ₹ {{row[8]}}</strong></span>
+          <span style="font-size: 18px;" class="stretched-link">Seller: {{row[2]}}</span>
+          <span style="font-size: 18px;" class="stretched-link">Condition: {{row[4]}}</span>
+          <span style="font-size: 18px;" class="stretched-link">Pages: {{row[3]}}</span>
+          <span style="font-size: 18px;" class="stretched-link">Tags: {{row[10]}}</span>
+        </div>
+        <div class="col-auto d-none d-lg-block">
+          <img style="width:400px;height:400px;object-fit:cover;" src=".{{row[11]}}" alt="">
+
+        </div>
+      </div>
+      {% endfor %}
+
+
+
           </div>
       </div>
 

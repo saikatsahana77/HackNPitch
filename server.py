@@ -9,6 +9,10 @@ from flask import Flask, render_template, redirect, url_for, request
 from werkzeug.utils import secure_filename
 from io import BufferedReader
 from flask_sqlalchemy import SQLAlchemy
+import os
+import cv2
+import numpy as np
+from PIL import Image
 
 
 
@@ -29,7 +33,7 @@ class Transactions(db.Model):
     price = db.Column(db.Float)
     desc = db.Column(db.String, nullable=True)
     tags = db.Column(db.String)
-    c_image  = db.Column(db.LargeBinary)
+    c_image  = db.Column(db.String)
     id  = db.Column(db.Integer, primary_key=True)
 
 
@@ -82,10 +86,35 @@ def index():
         return render_template('index.html', data="e")
 
 
-@app.route('/dashboard')
-def dashboard():
-    return render_template("dashboard.html")
+@app.route('/dashboard/<email>')
+def dashboard(email):
+    email=str(email)
+    conn = sqlite3.connect("bookify.db")
+    q1 = "select b_name, bought, seller, pages, age, subject, stream, weight, price, desc, tags, c_image from transactions order by id desc".format(em=email)
+    rows = conn.execute(q1)
+    rows = rows.fetchall()
+    for i in range(len(rows)):
+        rows[i] = list(rows[i])
+    for i in range(len(rows.copy())):
+        if (rows[i][1] == 1):
+            rows.remove(rows[i][1])
+        else:
+            pass
+        if (rows[i][4]== 1):
+            rows[i][4] = "Less than 1 year"
+        elif (rows[i][4]== 2):
+            rows[i][4] = "Less than 2 years"
+        elif (rows[i][4]== 3):
+            rows[i][4] = "Less than 5 years"
+        else:
+            rows[i][4] = "More than 5 years"
+    return render_template("dashboard.html", rows= rows)
 
+
+# Less than 1 year
+# Less than 2 years
+# Less than 5 years
+# More than 5 years
 
 @app.route('/signup_check', methods=['POST'])
 def signup_check():
@@ -126,7 +155,7 @@ def login_check():
     conn.close()
     if (len(rows) == 1):
         username = rows[0][0]
-        return redirect(url_for('dashboard'))
+        return redirect('dashboard/{}'.format(email))
     else:
         return redirect(url_for('index', v="c"))
 
@@ -190,9 +219,16 @@ def add_book():
     desc = request.form['desc_book']
     tags = request.form['tags_book']
     c_image = request.files['pic_book']
-
-    upload = Transactions(b_name= bname, seller = seller, buyer = buyer, bought=bought, pages = pages, age = age, subject = subject, stream = stream, weight = weight, price = price, desc = desc, tags= tags, c_image = c_image.read())
-
+    _, file_extension = os.path.splitext(c_image.filename)
+    filename_1 = str(random.randint(1, 1000000000))
+    filename = filename_1 + file_extension
+    filepath = os.path.join("./static/uploads/", filename)
+    print(filepath,filename,filename_1,file_extension)
+    c_image = Image.open(c_image)
+    c_image = np.array(c_image)
+    c_image  = cv2.cvtColor(c_image, cv2.COLOR_BGR2RGB)
+    cv2.imwrite(filepath, c_image)
+    upload = Transactions(b_name= bname, seller = seller, buyer = buyer, bought=bought, pages = pages, age = age, subject = subject, stream = stream, weight = weight, price = price, desc = desc, tags= tags, c_image = filepath)
     db.session.add(upload)
     db.session.commit()
     return redirect("/products/{}".format(seller))
@@ -217,7 +253,7 @@ def update_details():
 def method_name(email):
     email=str(email)
     conn = sqlite3.connect("bookify.db")
-    q1 = "select b_name, buyer, bought, pages, age, subject, stream, weight, price, desc, tags from transactions where seller = '{em}' order by id desc".format(em=email)
+    q1 = "select b_name, buyer, bought, pages, age, subject, stream, weight, price, desc, tags, c_image from transactions where seller = '{em}' order by id desc".format(em=email)
     rows = conn.execute(q1)
     rows = rows.fetchall()
     for i in range(len(rows)):
