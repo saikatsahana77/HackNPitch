@@ -16,7 +16,7 @@
     <title>About Page</title>
     <style>
       body {
-        height: 100vh;
+        min-height: 100vh;
         background-image: radial-gradient(
             circle at center center,
             rgba(33, 33, 33, 0),
@@ -39,10 +39,21 @@
           linear-gradient(90deg, rgb(33, 33, 33), rgb(33, 33, 33));
       }
       .container{
-        position: absolute;
+        /* position: absolute;
         top:50%;
         left: 50%;
-        transform: translate(-50%,-50%);
+        transform: translate(-50%,-50%); */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height:90vh;
+        /* display: table-cell;
+        vertical-align: middle; */
+      }
+      @media  (max-width: 992px) {
+        .row div {
+          margin: 10px 0;
+        }
       }
     </style>
   </head>
@@ -82,9 +93,9 @@
         </div>
       </div>
     </nav>
-    <div class="container py-4">
+    <div class="container d-flex align-items-center py-4">
       <div class="row">
-        <div class="col-md-4">
+        <div class="col-lg-4">
           <div class="card" style="width: 18rem">
             <img src="../static/images/saikat.jpg" class="card-img-top" alt="..." />
             <div class="card-body">
@@ -96,9 +107,9 @@
             </div>
           </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-lg-4">
           <div class="card" style="width: 18rem">
-            <img src="../static/images/sanket.jpg" style="height:19rem;" class="card-img-top" alt="..." />
+            <img src="../static/images/sanket.jpg" style="height:19.5rem;" class="card-img-top" alt="..." />
             <div class="card-body">
               <h5 class="card-title">Sanket Choudhury</h5>
               <p class="card-text">
@@ -111,9 +122,9 @@
             </div>
           </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-lg-4">
           <div class="card" style="width: 18rem">
-            <img src="../static/images/gourav.jpg" style="height:20rem;" class="card-img-top" alt="..." />
+            <img src="../static/images/gourav.jpg" style="height:21rem;" class="card-img-top" alt="..." />
             <div class="card-body">
               <h5 class="card-title">Gourab Chatterjee</h5>
               <p class="card-text">
