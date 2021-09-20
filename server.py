@@ -90,24 +90,32 @@ def index():
 def dashboard(email):
     email=str(email)
     conn = sqlite3.connect("bookify.db")
-    q1 = "select b_name, bought, seller, pages, age, subject, stream, weight, price, desc, tags, c_image from transactions order by id desc".format(em=email)
+    q1 = "select b_name, bought, seller, pages, age, subject, stream, weight, price, desc, tags, c_image, buyer, id from transactions order by id desc".format(em=email)
     rows = conn.execute(q1)
     rows = rows.fetchall()
+    print(rows)
     for i in range(len(rows)):
         rows[i] = list(rows[i])
-    for i in range(len(rows.copy())):
-        if (rows[i][1] == 1):
-            rows.remove(rows[i][1])
+    for idx,i in enumerate(rows.copy()):
+        print(i[1])
+        print(i[12])
+        print(i)
+        if (i[1] == 1):
+            rows.remove(i)
         else:
             pass
-        if (rows[i][4]== 1):
-            rows[i][4] = "Less than 1 year"
-        elif (rows[i][4]== 2):
-            rows[i][4] = "Less than 2 years"
-        elif (rows[i][4]== 3):
-            rows[i][4] = "Less than 5 years"
+        if (i[12]!= None):
+            rows.remove(i)
         else:
-            rows[i][4] = "More than 5 years"
+            pass
+        # if (i[4]== 1):
+        #     rows[idx][4] = "Less than 1 year"
+        # elif (i[4]== 2):
+        #     rows[idx][4] = "Less than 2 years"
+        # elif (i[4]== 3):
+        #     rows[idx][4] = "Less than 5 years"
+        # elif (i[4]== 4):
+        #     rows[idx][4] = "More than 5 years"
     return render_template("dashboard.html", rows= rows)
 
 
@@ -272,6 +280,46 @@ def method_name(email):
 @app.route('/about')
 def about():
     return render_template("about.html")
+
+
+@app.route('/add_cart/<id>', methods=['POST'])
+def add_cart(id):
+    email = request.form['email_send_cont']
+    conn = sqlite3.connect("bookify.db")
+    q1 = "update transactions set buyer ='{em}' where id='{id}'".format(em=email, id=id)
+    conn.execute(q1)
+    conn.commit()
+    conn.close()
+    return redirect("/cart/{}".format(email))
+
+
+@app.route('/cart/<email>')
+def cart(email):
+    email=str(email)
+    conn = sqlite3.connect("bookify.db")
+    q1 = "select b_name, bought, seller, pages, age, subject, stream, weight, price, desc, tags, c_image, buyer, id from transactions where buyer = '{em}' order by id desc".format(em=email)
+    rows = conn.execute(q1)
+    rows = rows.fetchall()
+    q2 = "select phone from users where email = '{em}'".format(em=email)
+    rows_1 = conn.execute(q2)
+    rows_1 = rows_1.fetchall()
+    for i in range(len(rows)):
+        rows[i] = list(rows[i])
+    print(rows)
+    for i in rows.copy():
+        if (i[1] == 1):
+            rows.remove(i)
+        else:
+            pass
+        # if (rows[i][4]== 1):
+        #     rows[i][4] = "Less than 1 year"
+        # elif (rows[i][4]== 2):
+        #     rows[i][4] = "Less than 2 years"
+        # elif (rows[i][4]== 3):
+        #     rows[i][4] = "Less than 5 years"
+        # else:
+        #     rows[i][4] = "More than 5 years"
+    return render_template("cart.html", rows= rows, rows_1 = rows_1)
 
 
 if __name__ == '__main__':

@@ -26,29 +26,6 @@ body{
     background-color: #343434;
 }
 
-/* .main_section {
-    border: 2px solid #343434;
-    border-radius: 8px;
-} */
-
-#sell_btn{
-    font-size: 32px;
+a:hover {
+    color:#fff;
 }
-
-#search_cont{
-    width:100%;
-}
-
-#search_cont input{
-    font-size: 33px;
-}
-
-#search_btn{
-    width: 50px;
-}
-
-#sell_btn {
-    color: #fff;
-    text-decoration: none;
-}
-

@@ -30,7 +30,7 @@
                 <a class="nav-link" href="#">Your Purchases</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Your Cart</a>
+                <a class="nav-link" id="cart_btn">Your Cart</a>
               </li>
               <li class="nav-item">
                 <a id="product_btn" class="nav-link">Your Products</a>
@@ -85,6 +85,10 @@
 
 
             {% for row in rows %}
+          <form action="/add_cart/{{row[13]}}" method="post">
+            <input style="display:none;" type="text" name="email_send_cont" class="email_send_cont" >
+            <button  type="submit" class="btn btn-success btn-lg"><i class="fas fa-shopping-cart"></i> Add To Cart!</button>
+          </form>
       <div class="items row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative" style='background-color: rgb(221, 221, 221);'>
         <div class="col p-4 d-flex flex-column position-static">
           <strong class="d-inline-block mb-2 text-primary">{{row[5]}}</strong>
@@ -97,11 +101,10 @@
           <span style="font-size: 18px;" class="stretched-link">Pages: {{row[3]}}</span>
           <span class="tags" style="font-size: 18px;" class="stretched-link">Tags: {{row[10]}}</span>
           <br>
-          <button type="button" class="btn btn-success btn-lg"> <a href=""> <i class="fas fa-shopping-cart"></i> Add To Cart! </a></button>
+          
         </div>
         <div class="col-auto d-none d-lg-block">
           <img style="width:400px;height:400px;object-fit:cover;" src=".{{row[11]}}" alt="">
-
         </div>
       </div>
       {% endfor %}

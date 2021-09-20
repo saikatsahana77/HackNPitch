@@ -11,37 +11,8 @@ document.getElementById("sell_btn").setAttribute("href",k);
 k = "../products/"+sessionStorage.getItem("email");
 document.getElementById("product_btn").setAttribute("href",k);
 
-
-// var items = document.querySelectorAll(".items");
-// var search = document.getElementById("search_btn");
-// var query = document.getElementById("search");
-// var tags = document.querySelectorAll(".tags");
-
-
-// search.addEventListener("click", function() {
-//     console.log("running");
-//     console.log(tags);
-//     tags.forEach((idx) => {
-//         var string = idx.innerHTML;
-//         var substring = query.value;
-//         if (string.indexOf(substring) !== -1){
-//             console.log(idx.parentElement);
-//             var el = idx.parentElement;
-//             // while(el.className != 'items'){
-//             //     el = el.parentElement;
-//             // }
-//             el.style.display = "block";
-//         }
-//         else{
-//             console.log(this);
-//             var el = idx.parentElement;
-//             // while(el.className != 'items'){
-//             //     el = el.parentElement;
-//             // }
-//             el.style.display = "none";
-//         }
-//     })
-// });
+k = "../cart/"+sessionStorage.getItem("email");
+document.getElementById("cart_btn").setAttribute("href",k);
 
 
 function filter() {
@@ -60,4 +31,10 @@ function filter() {
             }
         }
     }
+}
+
+
+var j = document.getElementsByClassName("email_send_cont");
+for (var i= 0; i < j.length; i++){
+    j[i].value  = sessionStorage.getItem("email");
 }
