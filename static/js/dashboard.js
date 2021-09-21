@@ -14,6 +14,10 @@ document.getElementById("product_btn").setAttribute("href",k);
 k = "../cart/"+sessionStorage.getItem("email");
 document.getElementById("cart_btn").setAttribute("href",k);
 
+k = "../purchases/"+sessionStorage.getItem("email");
+document.getElementById("purchase_btn").setAttribute("href",k);
+
+
 
 function filter() {
     var filter = document.getElementById("search_box").value.toUpperCase();

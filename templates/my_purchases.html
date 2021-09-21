@@ -1,20 +1,17 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <!-- Required meta tags -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+    <link rel="stylesheet" href="../static/css/my_purchases.css">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="shortcut icon" href="../static/favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
-    <link rel="stylesheet" href="../static/css/cart.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../static/css/link.css">
-    <title>Cart</title>
+
+    <title>Your Purchases</title>
   </head>
   <body>
-    
-
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
           <a class="navbar-brand" id="home_btn">Bookify</a>
@@ -24,16 +21,16 @@
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link" aria-current="page" id="dashboard_btn">Home</a>
+                <a id="dashboard_btn" class="nav-link" aria-current="page">Home</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" id="purchase_btn">Your Purchases</a>
+                <a class="nav-link active" href="#">Your Purchases</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link active" href="#">Your Cart</a>
+                <a class="nav-link" id="cart_btn">Your Cart</a>
               </li>
               <li class="nav-item">
-                <a id="product_btn" class="nav-link">Your Products</a>
+                <a class="nav-link" id="product_btn">Your Products</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="#">Your Reviews</a>
@@ -63,49 +60,33 @@
             </ul>
         </div>
       </nav>
-
-      <div class="container py-4">
-          <div class="main_section">
-            {% for row in rows %}
-          <form action="/buy_book/{{row[13]}}" method="post" style="display:inline;">
-            <input style="display:none;" type="text" name="email_send_cont" class="email_send_cont" >
-            <input style="display:none;" type="text" name="price_send_cont" class="price_send_cont" value="{{row[8]}}">
-            <button  type="submit" class="btn btn-success btn-lg"><i class="fas fa-shopping-cart"></i> Buy Now!</button>
-          </form>
-            {% for row_1 in rows_1 %}
-            <button style="display:inline;" type="button" class="btn btn-primary btn-lg"><a href="https://api.whatsapp.com/send?phone=91{{row_1[0]}}" target="_blank"><i class="fab fa-whatsapp"></i> Contact Seller </a></button>
-            {% endfor %}
-          <form action="/remove_book/{{row[13]}}" method="post" style="display:inline;">
-            <input type="text" name="email_send_cont" class="email_send_cont"  style="display:none;" >
-            <button  type="submit" class="btn btn-danger btn-lg"><i class="fas fa-times-circle"></i> Remove Item</button>
-          </form>
-      <div class="items row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative" style='background-color: rgb(221, 221, 221);'>
-        <div class="col p-4 d-flex flex-column position-static">
-          <strong class="d-inline-block mb-2 text-primary">{{row[5]}}</strong>
-          <h3 class="mb-0">{{row[0]}}</h3>
-          <div class="mb-1 text-muted">{{row[6]}}</div>
-          <p class="card-text mb-auto">{{row[9]}}</p>
-          <span style="font-size: 24px;" class="stretched-link"> <strong> ₹ {{row[8]}}</strong></span>
-          <span style="font-size: 18px;" class="stretched-link">Seller: {{row[2]}}</span>
-          <span style="font-size: 18px;" class="stretched-link">Condition: {{row[4]}}</span>
-          <span style="font-size: 18px;" class="stretched-link">Pages: {{row[3]}}</span>
-          <span class="tags" style="font-size: 18px;" class="stretched-link">Tags: {{row[10]}}</span>
-          <br>
-          
-        </div>
-        <div class="col-auto d-none d-lg-block">
-          <img style="width:400px;height:400px;object-fit:cover;" src=".{{row[11]}}" alt="">
-        </div>
+    <div class="container py-4">
+      
+        {% for row in rows %}
+    <div class="items row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative" style='background-color: rgb(221, 221, 221);'>
+      <div class="col p-4 d-flex flex-column position-static">
+        <strong class="d-inline-block mb-2 text-primary">{{row[5]}}</strong>
+        <h3 class="mb-0">{{row[0]}}</h3>
+        <div class="mb-1 text-muted">{{row[6]}}</div>
+        <p class="card-text mb-auto">{{row[9]}}</p>
+        <span style="font-size: 20px;" class="stretched-link"> <strong> ₹ {{row[8]}}</strong></span>
+        <span style="font-size: 18px;" class="stretched-link">Seller: {{row[2]}}</span>
+        <span style="font-size: 18px;" class="stretched-link">Condition: {{row[4]}}</span>
+        <span style="font-size: 18px;" class="stretched-link">Pages: {{row[3]}}</span>
+        <span class="tags" style="font-size: 18px;" class="stretched-link">Tags: {{row[10]}}</span>
+        <br>
+        
       </div>
-      {% endfor %}
-
-
-
-          </div>
+      <div class="col-auto d-none d-lg-block">
+        <img style="width:400px;height:400px;object-fit:cover;" src=".{{row[11]}}" alt="">
       </div>
+    </div>
+    {% endfor %}
+
+    </div>
 
 
-        <!-- Modal -->
+    <!-- Modal -->
   <div class="modal fade" data-bs-backdrop="static"  id="aboutModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
@@ -126,8 +107,7 @@
     </div>
 </div>
 </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="../static/js/cart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../static/js/my_purchases.js"></script>
   </body>
 </html>

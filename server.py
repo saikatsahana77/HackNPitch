@@ -6,14 +6,19 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 import sqlite3
 from flask import Flask, render_template, redirect, url_for, request
-from werkzeug.utils import secure_filename
-from io import BufferedReader
 from flask_sqlalchemy import SQLAlchemy
 import os
 import cv2
 import numpy as np
 from PIL import Image
+from instamojo_wrapper import Instamojo
 
+
+API_KEY = "test_e486fd7dc9a74a4bd030e7e5e0a"
+
+AUTH_TOKEN = "test_c176b5eb749d5d0fe752042e405"
+
+api = Instamojo(api_key=API_KEY,auth_token=AUTH_TOKEN,endpoint='https://test.instamojo.com/api/1.1/')
 
 
 app = Flask(__name__)
@@ -103,11 +108,10 @@ def dashboard(email):
         if (i[1] == 1):
             rows.remove(i)
         else:
-            pass
-        if (i[12]!= None):
-            rows.remove(i)
-        else:
-            pass
+            if (i[12]!= None):
+                rows.remove(i)
+            else:
+                pass
         # if (i[4]== 1):
         #     rows[idx][4] = "Less than 1 year"
         # elif (i[4]== 2):
@@ -320,6 +324,63 @@ def cart(email):
         # else:
         #     rows[i][4] = "More than 5 years"
     return render_template("cart.html", rows= rows, rows_1 = rows_1)
+
+
+@app.route('/remove_book/<id>' , methods=['POST'])
+def remove_book(id):
+    email = request.form['email_send_cont']
+    conn = sqlite3.connect("bookify.db")
+    q1 = "update transactions set buyer ={em} where id='{id}'".format(em="NULL", id=id)
+    conn.execute(q1)
+    conn.commit()
+    conn.close()
+    return redirect("/dashboard/{}".format(email))
+
+@app.route('/buy_book/<id>', methods=['POST'])
+def buy_book(id):
+    email = request.form['email_send_cont']
+    price = request.form['price_send_cont']
+
+    response = api.payment_request_create(
+        amount=price,
+        purpose="Book Buy",
+        buyer_name=email,
+        send_email=True,
+        email=email,
+        redirect_url="http://localhost:5000/login_error"
+        )
+
+    conn = sqlite3.connect("bookify.db")
+    q1 = "update transactions set bought='1' where id='{id}'".format(id=id)
+    conn.execute(q1)
+    conn.commit()
+    conn.close()
+    
+    return redirect(response['payment_request']['longurl'])
+
+@app.route('/login_error')
+def login_error():
+    return render_template("login_error.html")
+
+@app.route('/purchases/<email>')
+def purchases(email):
+    email=str(email)
+    conn = sqlite3.connect("bookify.db")
+    q1 = "select b_name, bought, seller, pages, age, subject, stream, weight, price, desc, tags, c_image, buyer, id from transactions where buyer='{em}' order by id desc".format(em=email)
+    rows = conn.execute(q1)
+    rows = rows.fetchall()
+    print(rows)
+    for i in range(len(rows)):
+        rows[i] = list(rows[i])
+    for idx,i in enumerate(rows.copy()):
+        print(i[1])
+        print(i[12])
+        print(i)
+        if (i[1] == 0):
+            rows.remove(i)
+        else:
+            pass
+    return render_template("my_purchases.html", rows=rows)
 
 
 if __name__ == '__main__':
