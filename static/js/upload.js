@@ -9,6 +9,15 @@ document.getElementById("product_btn").setAttribute("href",k);
 k = "../cart/"+sessionStorage.getItem("email");
 document.getElementById("cart_btn").setAttribute("href",k);
 
+k = "../purchases/"+sessionStorage.getItem("email");
+document.getElementById("purchase_btn").setAttribute("href",k);
+
+k = "../dashboard/"+sessionStorage.getItem("email");
+document.getElementById("dashboard_btn").setAttribute("href",k);
+
+k = "../dashboard/"+sessionStorage.getItem("email");
+document.getElementById("home_btn").setAttribute("href",k);
+
 
 function add_sub() {
     var subject = document.getElementById("sub_book");

@@ -1,10 +1,14 @@
 function detect() {
-    document.getElementById("password1").classList.add("pass_mismatch");
+    document.getElementById("password1_signup").classList.add("pass_mismatch");
     document.getElementById("passHelp1").style.display = "block";
 }
 
 function passWeak() {
     document.getElementById("passHelp").style.display = "block";
+}
+
+function phoneWrong() {
+    document.getElementById("phoneHelp").style.display = "block";
 }
 
 var otp ="";
@@ -15,27 +19,23 @@ function fill_email(){
     email = document.getElementById("email_otp_check").value;
 }
 
-
+var passw=  /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/;
 var signup = document.getElementById("signup");
 
-signup.addEventListener("submit", function(e) {
-    var psd = document.getElementById("password").value;
-    var conf_psd = document.getElementById("password1").value;
-    var pass_regex=  newRegExp('((?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{6,}))|((?=.*[a-z])(?=.*[A-Z])(?=.*[^A-Za-z0-9])(?=.{8,}))');
-    var errors= 0;
-    if (psd !== conf_psd){
-        errors+=1;
-        detect()
-    }
-    if(psd.test(pass_regex) == false){
-        errors+=1;
-        passWeak();
-    } 
-    if (errors > 0)
-    {
+signup.addEventListener("submit", function (e) {
+    if (document.getElementById("password_signup").value !== document.getElementById("password1_signup").value || document.getElementById("password_signup").value.match(passw) == null || document.getElementById("email_verify_otpHelp").innerHTML==="Incorrect OTP!" || document.getElementById("phone").value.length !== 10){
         e.preventDefault();
-    }
-})
+        if (document.getElementById("password_signup").value !== document.getElementById("password1_signup").value){
+            detect();
+        }
+        if (document.getElementById("password_signup").value.match(passw) == null) {
+            passWeak();
+        }
+        if (document.getElementById("phone").value.length !== 10) {
+            phoneWrong();
+        }
+    } 
+});
 
 
 var login = document.getElementById("signIn");
@@ -80,6 +80,21 @@ $('#otp').bind('click', function() {
 });
 });
 
+$(function() {
+    $('#otp_verify').bind('click', function() {
+        $.ajax('/send_otp_check', {
+        type: 'POST', 
+        data: {email: $('#email_check_otp').val()},
+        success: function (data, status, xhr) {
+            otp = data
+        },
+        error: function (jqXhr, textStatus, errorMessage) {
+        }
+    });
+        return false;
+    });
+    });
+
 
 function check_otp(){
     var confirm_otp = document.getElementById("box_otp").value;
@@ -91,5 +106,17 @@ function check_otp(){
         document.getElementById("otp_confirm").setAttribute("data-bs-target","#newPassModal");
         document.getElementById("otp_confirm").click();
         document.getElementById("email_final").value = email;
+    }
+}
+
+function check_otp_1(){
+    var confirm_otp = document.getElementById("box_email_verify_otp").value;
+    if (confirm_otp !== otp){
+        document.getElementById("email_verify_otpHelp").style.display = "block";
+    }
+    else{
+        document.getElementById("email_verify_otpHelp").innerHTML = "Correct OTP!";
+        document.getElementById("email_verify_otpHelp").style.color = "green";
+        document.getElementById("email_verify_otpHelp").style.display = "block";
     }
 }

@@ -53,12 +53,12 @@ def readImage(img_name):
         return img
 
 
-def otp_send(email):
+def otp_send(email, porpouse):
     sender_email = "bookify.suuport@gmail.com"
     receiver_email = email
     password = "bookify12#"
     message = MIMEMultipart()
-    message["Subject"] = "OTP For password reset"
+    message["Subject"] = "OTP For {}".format(porpouse)
     message["From"] = sender_email
     message["To"] = receiver_email
     digits = [i for i in range(0, 10)]
@@ -66,7 +66,7 @@ def otp_send(email):
     for i in range(6):
         index = math.floor(random.random() * 10)
         otp += str(digits[index])
-    text = "Your OTP for password reset is {}".format(otp)
+    text = "Your OTP for {} is {}".format(porpouse, otp)
     content = MIMEText(text, "plain")
     message.attach(content)
     context = ssl.create_default_context()
@@ -174,7 +174,7 @@ def login_check():
 @app.route('/send_otp', methods=['POST'])
 def send_otp():
     email = request.form['email']
-    otp = otp_send(email)
+    otp = otp_send(email,"password reset")
     return otp
 
 @app.route('/reset_password', methods=['POST'])
@@ -381,6 +381,13 @@ def purchases(email):
         else:
             pass
     return render_template("my_purchases.html", rows=rows)
+
+
+@app.route('/send_otp_check', methods=['POST'])
+def send_otp_check():
+    email = request.form['email']
+    otp = otp_send(email, "email verification")
+    return otp
 
 
 if __name__ == '__main__':

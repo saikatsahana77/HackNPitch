@@ -67,8 +67,6 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-            
-
                 <form id="signup" action="/signup_check" method="post">
                     <div class="mb-3">
                         <label for="name" class="form-label">Full Name</label>
@@ -76,20 +74,25 @@
                     </div>
                     <div class="mb-3">
                       <label for="email" class="form-label">Email address</label>
-                      <input type="email" name="email" class="form-control" id="email" aria-describedby="emailHelp">
+                      <input type="email" name="email" class="form-control mb-2" id="email_check_otp" aria-describedby="emailHelp" required>
+                      <button type="button" id="otp_verify" class="btn btn-primary form-control mb-2">Verify Email</button>
+                      <input type="number" name="otp_verify" class="form-control" aria-describedby="otpHelp" id="box_email_verify_otp"  placeholder="Enter OTP..." required>
+                      <div id="email_verify_otpHelp" style="color:red; display:none;" class="form-text mb-2">Incorrect OTP!</div>
+                      <button type="button" onclick="check_otp_1();" class="btn btn-primary form-control mb-2">Check OTP!</button>
                     </div>
                     <div class="mb-3">
                         <label for="phone" class="form-label">Phone Number (Please exclude 0 or +91 at the start)</label>
-                        <input type="number" name="phone"  class="form-control" id="phone" aria-describedby="emailHelp">
+                        <input type="number" name="phone"  class="form-control" id="phone" required aria-describedby="emailHelp">
+                        <div id="phoneHelp" style="color:red; display:none;" class="form-text">Incorrect Phone Number!</div>
                     </div>
                     <div class="mb-3">
                       <label for="password" class="form-label">Password</label>
-                      <input type="password" name="pass" class="form-control" id="password"  aria-describedby="passHelp">
-                      <div id="passHelp" style="color:red; display:none;" class="form-text">Password is not strong enough!</div>
+                      <input type="password" name="pass" class="form-control" id="password_signup" required aria-describedby="passHelp">
+                      <div id="passHelp" style="color:red; display:none;" class="form-text">Password is not strong enough! (6 to 20 characters which contain at least one numeric digit, one uppercase and one lowercase letter)</div>
                     </div>
                     <div class="mb-3">
                         <label for="password1" class="form-label">Confirm Password</label>
-                        <input type="password" class="form-control" id="password1" aria-describedby="passHelp1">
+                        <input type="password" required class="form-control" id="password1_signup" aria-describedby="passHelp1">
                         <div id="passHelp1" style="color:red; display:none;" class="form-text">Passwords don't match!</div>
                     </div>
             </div>
