@@ -160,14 +160,17 @@ def login_check():
     email = request.form['email']
     pswd = request.form['pass']
     conn = sqlite3.connect("bookify.db")
-    q1 = "select username, password, email from users where email = '{em}' and password = '{ps}'".format(
+    q1 = "select username, password, email, p_updated from users where email = '{em}' and password = '{ps}'".format(
         em=email, ps=pswd)
     rows = conn.execute(q1)
     rows = rows.fetchall()
     conn.close()
     if (len(rows) == 1):
-        username = rows[0][0]
-        return redirect('dashboard/{}'.format(email))
+        print(rows[0][3])
+        if (rows[0][3]==0):
+            return redirect('profile/{}'.format(email))
+        else:
+            return redirect('dashboard/{}'.format(email))
     else:
         return redirect(url_for('index', v="c"))
 
@@ -254,7 +257,7 @@ def update_details():
     social = request.form['social']
     upi  = request.form['upi']
     conn = sqlite3.connect("bookify.db")
-    q1 = "update users set phone ='{ph}', address='{ad}', social ='{so}', upi='{upi}' where email='{em}'".format(em=email, ph=phone, ad=address, so=social, upi=upi)
+    q1 = "update users set phone ='{ph}', address='{ad}', social ='{so}', upi='{upi}', p_updated='{pup}' where email='{em}'".format(em=email, ph=phone, ad=address, so=social, upi=upi, pup=1)
     conn.execute(q1)
     conn.commit()
     conn.close()
@@ -315,15 +318,13 @@ def cart(email):
             rows.remove(i)
         else:
             pass
-        # if (rows[i][4]== 1):
-        #     rows[i][4] = "Less than 1 year"
-        # elif (rows[i][4]== 2):
-        #     rows[i][4] = "Less than 2 years"
-        # elif (rows[i][4]== 3):
-        #     rows[i][4] = "Less than 5 years"
-        # else:
-        #     rows[i][4] = "More than 5 years"
-    return render_template("cart.html", rows= rows, rows_1 = rows_1)
+    sum = 0.0
+    ids = ""
+    for i in rows:
+        sum += i[8]
+        ids += " "+str(i[13])
+    print(ids)
+    return render_template("cart.html", rows= rows, rows_1 = rows_1, sum=sum, ids=ids)
 
 
 @app.route('/remove_book/<id>' , methods=['POST'])
@@ -347,13 +348,37 @@ def buy_book(id):
         buyer_name=email,
         send_email=True,
         email=email,
-        redirect_url="http://localhost:5000/login_error"
+        redirect_url="http://localhost:5000/purchases/{}".format(email)
         )
 
     conn = sqlite3.connect("bookify.db")
     q1 = "update transactions set bought='1' where id='{id}'".format(id=id)
     conn.execute(q1)
     conn.commit()
+    conn.close()
+    
+    return redirect(response['payment_request']['longurl'])
+
+@app.route('/buy_lot/<ids>', methods=['POST'])
+def buy_lot(ids):
+    ids = ids.split(" ")
+    email = request.form['email_send_cont']
+    price = request.form['price_inp']
+
+    response = api.payment_request_create(
+        amount=price,
+        purpose="Book Buy",
+        buyer_name=email,
+        send_email=True,
+        email=email,
+        redirect_url="http://localhost:5000/purchases/{}".format(email)
+        )
+
+    conn = sqlite3.connect("bookify.db")
+    for id in ids:
+        q1 = "update transactions set bought='1' where id='{id}'".format(id=id)
+        conn.execute(q1)
+        conn.commit()
     conn.close()
     
     return redirect(response['payment_request']['longurl'])

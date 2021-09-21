@@ -98,9 +98,20 @@
         </div>
       </div>
       {% endfor %}
-
-
-
+      <form action="/buy_lot/{{ids}}", method="post">
+      {% if sum != 0.0 %}
+      <input type="text" id="price_inp" name="price_inp" style="display:none;" value={{sum}}>
+      <input style="display:none;" type="text" name="email_send_cont" class="email_send_cont" >
+      <div class="row mt-4">
+        <div class="col-md-9">
+          <h1 id="price_tot">Total Price: {{sum}}</h1>
+        </div>
+        <div class="col-md-3">
+          <button  type="submit" class="btn btn-success btn-lg"><i class="fas fa-shopping-cart"></i> Proceed To Checkout!</button>
+        </div>
+      </div>
+      {% endif %}
+    </form>
           </div>
       </div>
 
