@@ -3,12 +3,25 @@ function detect() {
     document.getElementById("passHelp1").style.display = "block";
 }
 
+function detect_1() {
+    document.getElementById("password1_signup").classList.remove("pass_mismatch");
+    document.getElementById("passHelp1").style.display = "none";
+}
+
 function passWeak() {
     document.getElementById("passHelp").style.display = "block";
 }
 
+function passWeak_1() {
+    document.getElementById("passHelp").style.display = "none";
+}
+
 function phoneWrong() {
     document.getElementById("phoneHelp").style.display = "block";
+}
+
+function phoneWrong_1() {
+    document.getElementById("phoneHelp").style.display = "none";
 }
 
 var otp ="";
@@ -28,11 +41,20 @@ signup.addEventListener("submit", function (e) {
         if (document.getElementById("password_signup").value !== document.getElementById("password1_signup").value){
             detect();
         }
+        else{
+            detect_1();
+        }
         if (document.getElementById("password_signup").value.match(passw) == null) {
             passWeak();
         }
+        else{
+            passWeak_1();
+        }
         if (document.getElementById("phone").value.length !== 10) {
             phoneWrong();
+        }
+        else{
+            phoneWrong_1();
         }
     } 
 });
