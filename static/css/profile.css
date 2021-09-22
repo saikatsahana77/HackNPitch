@@ -1,3 +1,4 @@
+/* Setting an image for the body */
 body{
     height: 100vh;
     background-image: url(../images/back.jpg);
@@ -7,19 +8,23 @@ body{
     background-repeat: no-repeat;
 }
 
-
+/* Making the profile picture round */
 #profile {
     border-radius: 50%;
 }
+
+/* Making the profile picture bigger and white */
 #profile i {
     font-size: 30px;
     color: #fff;
 }
 
+/* Setting the hover color for the nav elements */
 .nav-item a:hover{
     color:#fff !important;
 }
 
+/* Setting the nav items to the center of the navbar */
 .nav-item {
     display: flex;
     justify-content: center;
@@ -27,17 +32,19 @@ body{
     align-items: center;
 }
 
+/* Making the dropdown elements colors on hover to be grey */
 .dropdown-item:hover{
     background-color: #343434;
 }
 
+/* Removing the arrows from the number field input */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
 
-
+/* Removing the arrows from the number field input for firefox */
 input[type=number]{
     -moz-appearance: textfield;
 }

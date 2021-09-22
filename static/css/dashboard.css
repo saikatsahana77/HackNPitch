@@ -1,20 +1,25 @@
+/* CSS gradient for the body */
 body{
     background-image: repeating-linear-gradient(135deg, rgba(56,55,55, 0.09) 0px, rgba(56,55,55, 0.09) 1px,transparent 1px, transparent 11px),repeating-linear-gradient(45deg, rgba(56,55,55, 0.09) 0px, rgba(56,55,55, 0.09) 1px,transparent 1px, transparent 11px),linear-gradient(90deg, hsl(183,0%,100%),hsl(183,0%,100%));
 }
 
-
+/* Making the profile picture round */
 #profile {
     border-radius: 50%;
 }
+
+/* Making the profile picture bigger and white */
 #profile i {
     font-size: 30px;
     color: #fff;
 }
 
+/* Setting the hover color for the nav elements */
 .nav-item a:hover{
     color:#fff !important;
 }
 
+/* Setting the nav items to the center of the navbar */
 .nav-item {
     display: flex;
     justify-content: center;
@@ -22,31 +27,32 @@ body{
     align-items: center;
 }
 
+/* Making the dropdown elements colors on hover to be grey */
 .dropdown-item:hover{
     background-color: #343434;
 }
 
-/* .main_section {
-    border: 2px solid #343434;
-    border-radius: 8px;
-} */
-
+/* Making the sell button font bigger */
 #sell_btn{
     font-size: 32px;
 }
 
+/* Making the search container 100% width of its parent */
 #search_cont{
     width:100%;
 }
 
+/* Making the font size larger of the search container */
 #search_cont input{
     font-size: 33px;
 }
 
-#search_btn{
-    width: 50px;
-}
 
+/* #search_btn{
+    width: 50px;
+} */
+
+/* Making the sell button color white and removing the underline */
 #sell_btn {
     color: #fff;
     text-decoration: none;

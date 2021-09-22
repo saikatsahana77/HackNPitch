@@ -1,44 +1,48 @@
+/* Importing fonts */
 @import url('https://fonts.googleapis.com/css2?family=Baloo+Bhai+2:wght@400;500;600;700&display=swap');
 
-
+/* Setting the fonts to the title */
 #title {
     font-family: 'Baloo Bhai 2', 'cursive';
     color: white;
     font-size: clamp(24px, 5vw, 50px);
 }
 
+/* CSS gradient for the body */
 body {
     height: 100vh;
     background-image: radial-gradient(circle at center center, rgba(33,33,33,0),rgb(33,33,33)),repeating-linear-gradient(135deg, rgb(33,33,33) 0px, rgb(33,33,33) 1px,transparent 1px, transparent 4px),repeating-linear-gradient(45deg, rgb(56,56,56) 0px, rgb(56,56,56) 5px,transparent 5px, transparent 6px),linear-gradient(90deg, rgb(33,33,33),rgb(33,33,33));
 }
 
-/* .pass_match {
-    background-color: #b1ff9e;
-} */
 
+/* Class for showing wrong password */
 .pass_mismatch {
     background-color: #ffbaa3;
 }
 
+/* Centering the carousel image */
 .carousel-inner img {
     margin: auto;
 }
 
+/* Setting the links to not show any underline */
 a{
     text-decoration: none;
 }
 
+/* Removing the arrows from the number field input */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
 
-
+/* Removing the arrows from the number field input for firefox */
 input[type=number]{
     -moz-appearance: textfield;
 }
 
+/* Making the cursor a pointer when the user hovers over forget password*/
 #forget_pass:hover {
     cursor: pointer;
 }

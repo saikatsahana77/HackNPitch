@@ -14,7 +14,7 @@
   </head>
   <body>
     
-
+   <!-- Navbar Element holding all the nav elements -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
           <a class="navbar-brand" href="#">Bookify</a>
@@ -61,6 +61,7 @@
         </div>
       </nav>
 
+      <!-- Container to hold all the items available for selling purpose -->
       <div class="container py-4">
           <div class="main_section">
             <div class="row">
@@ -72,15 +73,12 @@
                   <div class="form-outline" id="search_cont">
                     <input name="search" type="search" id="search_box" class="form-control" onkeyup="filter()" />
                   </div>
-                  <!-- <button id="search_btn" type="button" class="btn btn-primary">
-                    <i class="fas fa-search"></i>
-                  </button> -->
                 </div>
               </div>
             </div>
             <hr>
 
-
+            <!-- Loop through all the items available for sale -->
             {% for row in rows %}
           <form action="/add_cart/{{row[13]}}" method="post">
             <input style="display:none;" type="text" name="email_send_cont" class="email_send_cont" >
@@ -112,7 +110,7 @@
       </div>
 
 
-        <!-- Modal -->
+        <!--About Modal -->
   <div class="modal fade" data-bs-backdrop="static"  id="aboutModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
