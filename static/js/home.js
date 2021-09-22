@@ -1,25 +1,31 @@
+// Todetect the password mismatch
 function detect() {
     document.getElementById("password1_signup").classList.add("pass_mismatch");
     document.getElementById("passHelp1").style.display = "block";
 }
 
+// To detect the password match
 function detect_1() {
     document.getElementById("password1_signup").classList.remove("pass_mismatch");
     document.getElementById("passHelp1").style.display = "none";
 }
 
+// To detect weak password
 function passWeak() {
     document.getElementById("passHelp").style.display = "block";
 }
 
+// To detect strong password
 function passWeak_1() {
     document.getElementById("passHelp").style.display = "none";
 }
 
+// To detect the wrong phone number
 function phoneWrong() {
     document.getElementById("phoneHelp").style.display = "block";
 }
 
+// To detect the correct phone number
 function phoneWrong_1() {
     document.getElementById("phoneHelp").style.display = "none";
 }
@@ -27,14 +33,15 @@ function phoneWrong_1() {
 var otp ="";
 var email = "";
 
-
+// To check the value of email filled during password reset
 function fill_email(){
     email = document.getElementById("email_otp_check").value;
 }
 
-var passw=  /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/;
+var passw=  /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/;//regex to check strong password
 var signup = document.getElementById("signup");
 
+// Handling the submission of creation of a new user
 signup.addEventListener("submit", function (e) {
     if (document.getElementById("password_signup").value !== document.getElementById("password1_signup").value || document.getElementById("password_signup").value.match(passw) == null || document.getElementById("email_verify_otpHelp").innerHTML==="Incorrect OTP!" || document.getElementById("phone").value.length !== 10){
         e.preventDefault();
@@ -62,31 +69,35 @@ signup.addEventListener("submit", function (e) {
 
 var login = document.getElementById("signIn");
 
+// Handling the login of a user
 login.addEventListener("submit", function(e){
-    // e.preventDefault();
     sessionStorage.setItem("email", document.getElementById("email_store").value);
     if (document.getElementById("email_store").value === ""){
         e.preventDefault();
     }
 })
 
-
+// Handling the signup success of an user
 function signup_success(){
     swal("Signup Success", "Please login to proceed further!", "success");
 }
 
+// Handling the signup failure of an user
 function signup_failure(){
     swal("Signup Failed", "User is already registered!", "error");
 }
 
+// Handling the slogin failure of an user
 function login_failure(){
     swal("Login Failed", "Invalid email or password!", "error");
 }
 
+// To reset the password of an existing user
 function pass_reset(){
     swal("Password Reset", "Your Password has been reset!", "success");
 }
 
+// AJAX call to send otp to new user to check his/her email(uses jQuery)
 $(function() {
 $('#otp').bind('click', function() {
     $.ajax('/send_otp', {
@@ -102,6 +113,7 @@ $('#otp').bind('click', function() {
 });
 });
 
+// AJAX call to send otp to a existing user(uses jQuery)
 $(function() {
     $('#otp_verify').bind('click', function() {
         $.ajax('/send_otp_check', {
@@ -117,7 +129,7 @@ $(function() {
     });
     });
 
-
+// Fubction to check otp for password reset
 function check_otp(){
     var confirm_otp = document.getElementById("box_otp").value;
     if (confirm_otp !== otp){
@@ -131,6 +143,7 @@ function check_otp(){
     }
 }
 
+// Fubction to check otp for email confirmation
 function check_otp_1(){
     var confirm_otp = document.getElementById("box_email_verify_otp").value;
     if (confirm_otp !== otp){
