@@ -23,8 +23,9 @@ AUTH_TOKEN = "test_c176b5eb749d5d0fe752042e405"
 api = Instamojo(api_key=API_KEY,auth_token=AUTH_TOKEN,endpoint='https://test.instamojo.com/api/1.1/')
 
 # Creating and configuring a flask app
+cwd = "sqlite:///"+os.getcwd()+r"\bookify.db"
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = r"sqlite:///C:\Users\Asus\Desktop\HackNPitch\bookify.db"
+app.config['SQLALCHEMY_DATABASE_URI'] = cwd
 
 # Creating a sqlalchemy object and attaching it to a model
 db = SQLAlchemy(app)
