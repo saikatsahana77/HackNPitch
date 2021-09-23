@@ -1,7 +1,6 @@
 # Bookify - A Student Platform!
 
-## INSTALLING THE BELOW MENTIONED PACKAGES AND RUNNING IT ON LOCALHOST IS RECOMMENDED 
-### (DUE TO INTERNAL ERRORS IN THE PAYMENT GATEWAY API IN THE LIVE SERVER WHICH IS BEYOND OUR SCOPE OF DEVELOPMENT) (FOR OTHER FUNCTIONALITIES EXCEPT THE PAYMENT GATEWAY THE LIVE WEBSITE CAN BE ACCESSED AT https://bookify.pythonanywhere.com/ )
+## PLEASE FOLLOW THE BELOW MENTIONED INSTRUCTIONS TO RUN THE WEB APP IN LOCALHOST 
 <br>
 
 >One Stop for all your educational needs
@@ -14,7 +13,7 @@
     ```python3
     >>> pip install -r requirements.txt #for windows
     >>> pip3 install -r requirements.txt #for macos and linux
-    ``` 
+    ```  
 - Run the server.py file by running <i>python server.py (for windows)</i> or <i>python3 server.py (for linux and macos)</i> on it.
 - Then a local server is expected to spin up in your system if all the steps are followed correctly. Now go to the address:  http://127.0.0.1:5000/ to check our web app. 
 - Then follow the video mentioned below to have a walthrough of the whole web app.
