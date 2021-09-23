@@ -1,8 +1,12 @@
 # Bookify - A Student Platform!
 
+## INSTALLING THE BELOW MENTIONED PACKAGES AND RUNNING IT ON LOCALHOST IS RECOMMENDED 
+### (DUE TO INTERNAL ERRORS IN THE PAYMENT GATEWAY API IN THE LIVE SERVER WHICH IS BEYOND OUR SCOPE OF DEVELOPMENT) (FOR OTHER FUNCTIONALITIES EXCEPT THE PAYMENT GATEWAY THE LIVE WEBSITE CAN BE ACCESSED AT https://bookify.pythonanywhere.com/ )
+<br>
+
 >One Stop for all your educational needs
 
-## Usage Instructions :
+## LocalHost Usage Instructions :
 
 - Download the contents of The Repository as a Zip File or clone the Repository.
 - Install Python in your Machine. Instructions are avialable here. https://realpython.com/installing-python/
