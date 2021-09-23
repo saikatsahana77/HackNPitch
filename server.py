@@ -454,7 +454,7 @@ def purchases(email):
             rows.remove(i)
         else:
             pass
-    return render_template("my_purchases.html", rows=rows)
+    return render_template("my_purchases.html", rows=rows, email=email)
 
 # Creating post route for sending otp to validate email
 @app.route('/send_otp_check', methods=['POST'])
