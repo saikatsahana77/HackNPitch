@@ -16,7 +16,7 @@
     ```  
 - Run the server.py file by running <i>python server.py (for windows)</i> or <i>python3 server.py (for linux and macos)</i> on it.
 - Then a local server is expected to spin up in your system if all the steps are followed correctly. Now go to the address:  http://127.0.0.1:5000/ to check our web app. 
-- Then follow the video mentioned below to have a walthrough of the whole web app.
+- Then follow the video mentioned below to have a walthrough of the whole web app. Video URL: https://www.youtube.com/watch?v=SKhw-CZUb6A 
 
 ## Technologies used:
 - Fronetend: HTML, CSS, JS and few libraries like Bootstrap to facilitate creating the UI, Font Awesome to use vector Graphics and also Jquery to handle AJAX Calls, some dependencies like popper.js is included to assist Bootstrap but not used directly.
