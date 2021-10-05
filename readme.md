@@ -1,4 +1,4 @@
-# Bookify - A Student Platform!
+## Bookify - A Student Platform!
 
 ## PLEASE FOLLOW THE BELOW MENTIONED INSTRUCTIONS TO RUN THE WEB APP IN LOCALHOST 
 <br>
